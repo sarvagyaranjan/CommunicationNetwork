@@ -1,71 +1,73 @@
-#include <stdio.h>
-#include <string.h>
-
-// Function for bit de-stuffing
-void bitDestuffing(int N, int arr[])
+ #include<stdio.h>
+#include<conio.h>
+#include<math.h>
+#include<string.h>
+int i,j;
+void sender(int b[10],int k)
 {
-    // Stores the de-stuffed array
-    int brr[30];
-
-    // Variables to traverse the arrays
-    int i, j, k;
-    i = 0;
-    j = 0;
-
-    // Stores the count of consecutive ones
-    int count = 1;
-
-    // Loop to traverse in the range [0, N)
-    while (i < N) {
-
-        // If the current bit is a set bit
-        if (arr[i] == 1) {
-
-            // Insert into array brr[]
-            brr[j] = arr[i];
-
-            // Loop to check for
-            // the next 5 bits
-            for (k = i + 1;
-                 arr[k] == 1
-                 && k < N
-                 && count < 5;
-                 k++) {
-                j++;
-                brr[j] = arr[k];
-                count++;
-
-                // If 5 consecutive set
-                // bits are found skip the
-                // next bit in arr[]
-                if (count == 5) {
-                    k++;
-                }
-                i = k;
-            }
-        }
-
-        // Otherwise insert arr[i] into
-        // the array brr
-        else {
-            brr[j] = arr[i];
-        }
-        i++;
-        j++;
-    }
-
-    // Print Answer
-    for (i = 0; i < j; i++)
-        printf("%d", brr[i]);
+ int checksum,sum=0;
+     printf("\n****SENDER****\n");
+     for( i=0;i<k;i++)
+     sum+=b[i];
+     printf("SUM IS: %d\n",sum);
+     checksum=~sum;
+     printf("\nSENDER's CHECKSUM IS:%d",checksum);
 }
-
-// Driver Code
 int main()
 {
-    int N = 10;
-    int arr[] = { 1, 1, 1, 1, 1, 0, 1,0,1,1 };
-
-    bitDestuffing(N, arr);
-
-    return 0;
+    char str[100], bstr[100];
+     int a[100],m,scheck;
+     char choice;
+     printf("\n.....YOUR OPTIONS....\n");
+     printf("\na.Checksum\nb. Bit stuffing\nc. Character count\n");
+     printf("\nEnter your choice:");
+     scanf("%c",&choice);
+     switch(choice)
+     {
+     //Checksum Calculation
+         case 'a':
+         {
+         printf("\nENTER SIZE OF THE STRING:");
+         scanf("%d",&m);
+         printf("\nENTER THE ELEMENTS OF THE ARRAY:");
+         for(i=0;i<m;i++)
+             scanf("%d",&a[i]);
+             sender(a,m);
+        }
+         break;
+         //Bit stuffing
+         case 'b':
+         {
+         int count=0;
+         printf("Enter the bit string: ");
+         scanf("%s",str);
+         for(i=j=0; str[i]; i++)
+         {
+        if(str[i]=='1') count++;
+         else count=0;
+         bstr[i+j]=str[i];
+         if(count==5)
+         {
+         j++;
+         bstr[i+j]='0';
+         count=0;
+        }
+        }
+         bstr[i+j]='\0';
+         printf("\nAfter Bit stuffing : %s\n", bstr);
+         }
+         break;
+         //Inserting character count code
+         case 'c':
+         {
+         char arr[100]; int x,y;
+         printf("\nENTER THE ELEMENTS OF THE ARRAY:");
+         scanf("%s",arr);
+         printf("\n Resultant Frame using character count = %d%s\n",strlen(arr)+1,arr);
+         }
+     break;
+     default:
+     printf("\nYou entered an invalid choice run program again");
+    }
+     getch();
 }
